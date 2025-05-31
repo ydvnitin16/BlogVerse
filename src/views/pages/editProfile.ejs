@@ -1,0 +1,59 @@
+
+  <section class="flex justify-center flex-grow items-center bg-gray-50 px-4 min-h-screen bg-gradient-to-tr from-indigo-100 via-white to-pink-35">
+    <!-- Form Container -->
+    <div class="w-full max-w-lg px-6 lg:px-8 py-10">
+      <img src="/assets/blogVerseBanner.jpg" alt="BlogVerse logo"
+                class="mx-auto lg:mb-11 mb-8 object-cover h-20">
+
+      <div class="rounded-2xl bg-white shadow-xl">
+        <form class="lg:p-11 p-7 mx-auto" action="/user/edit" method="post">
+          <!-- Header -->
+          <div class="mb-11">
+            <h1 class="text-gray-900 text-center font-manrope text-3xl font-bold leading-10 mb-2">
+              Update Profile
+            </h1>
+            <p class="text-gray-500 text-center text-base font-medium leading-6">
+              Manage your account details below
+            </p>
+          </div>
+          <div class="relative w-28 h-28 mx-auto mb-4">
+            <img class="w-full h-full rounded-full object-cover border-4 border-white shadow-md"
+              src="https://img.freepik.com/free-vector/blue-circle-with-white-user_78370-4707.jpg?semt=ais_hybrid&w=740"
+              alt="Profile Image">
+          </div>
+
+          <!-- Name -->
+          <input type="text" name="name" value="<%= user.name %>" placeholder="Full Name"
+            class="w-full h-12 text-gray-900 placeholder:text-gray-400 text-lg font-normal leading-7 rounded-full border border-gray-300 shadow-sm focus:outline-none focus:ring-2 focus:ring-indigo-500 px-4 mb-6" />
+
+          <!-- Role -->
+          <select name="role"
+            class="w-full h-12 text-gray-900 text-lg font-normal leading-7 rounded-full border border-gray-300 shadow-sm focus:outline-none focus:ring-2 focus:ring-indigo-500 px-4 mb-6">
+            <% roles.forEach(function(role) { %>
+              <option value="<%= role %>" <% if (role===user.role) { %> selected <% } %>><%= role %>
+              </option>
+              <% }); %>
+          </select>
+
+          <!-- New Password -->
+          <input type="password" name="password" placeholder="New Password"
+            class="w-full h-12 text-gray-900 placeholder:text-gray-400 text-lg font-normal leading-7 rounded-full border border-gray-300 shadow-sm focus:outline-none focus:ring-2 focus:ring-indigo-500 px-4 mb-6" />
+
+          <!-- Confirm Password -->
+          <input type="password" name="confirmPwd" placeholder="Confirm Password"
+            class="w-full h-12 text-gray-900 placeholder:text-gray-400 text-lg font-normal leading-7 rounded-full border border-gray-300 shadow-sm focus:outline-none focus:ring-2 focus:ring-indigo-500 px-4 mb-6" />
+
+          <!-- Update Button -->
+          <button type="submit"
+            class="w-full h-12 text-white text-center text-base font-semibold leading-6 rounded-full bg-indigo-600 hover:bg-indigo-800 transition-all duration-700 shadow-sm mb-6">
+            Update Profile
+          </button>
+
+          <!-- Optional Link -->
+          <a href="/" class="flex justify-center text-gray-900 text-base font-medium leading-6">
+            Back to Home
+          </a>
+        </form>
+      </div>
+    </div>
+  </section>

@@ -1,0 +1,30 @@
+
+    <section class="flex justify-center flex-grow items-center bg-gray-50 px-2 min-h-screen bg-gradient-to-br from-indigo-50 via-white to-pink-50">
+        <div class="w-full max-w-lg px-6 lg:px-8 py-10">
+            <img src="/assets/blogVerseBanner.jpg" alt="BlogVerse logo"
+                class="mx-auto lg:mb-11 mb-8 object-cover h-20">
+            <div class="rounded-2xl bg-white shadow-xl">
+                <form action="/user/login" method="post" class="lg:p-11 p-7 mx-auto">
+                    <div class="mb-11">
+                        <h1 class="text-gray-900 text-center font-manrope text-3xl font-bold leading-10 mb-2">Welcome
+                            Back</h1>
+                        <p class="text-gray-500 text-center text-base font-medium leading-6">Enter Your details below</p>
+                    </div>
+                    <input name="email" type="text"
+                        class="w-full h-12 text-gray-900 placeholder:text-gray-400 text-lg font-normal leading-7 rounded-full border-gray-300 border shadow-sm focus:outline-none px-4 mb-6"
+                        placeholder="Username">
+                    <input name="password" type="password"
+                        class="w-full h-12 text-gray-900 placeholder:text-gray-400 text-lg font-normal leading-7 rounded-full border-gray-300 border shadow-sm focus:outline-none px-4 mb-1"
+                        placeholder="Password">
+                    <a href="javascript:;" class="flex justify-end mb-6">
+                        <span class="text-indigo-600 text-right text-base font-normal leading-6">Forgot Password?</span>
+                    </a>
+                    <button
+                        class="w-full h-12 text-white text-center text-base font-semibold leading-6 rounded-full hover:bg-indigo-800 transition-all duration-700 bg-indigo-600 shadow-sm mb-11">Login</button>
+                    <a href="/signup" class="flex justify-center text-gray-900 text-base font-medium leading-6">
+                        Don’t have an account? <span class="text-indigo-600 font-semibold pl-3"> Sign Up</span>
+                    </a>
+                </form>
+            </div>
+        </div>
+    </section>

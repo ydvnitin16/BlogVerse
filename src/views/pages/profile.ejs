@@ -1,0 +1,30 @@
+<div class=" bg-gradient-to-tr from-indigo-100 via-white to-pink-50 flex items-center justify-center min-h-[80vh] p-4 ">
+  <div class="bg-white p-8 rounded-2xl shadow-xl w-full max-w-md text-center border border-gray-200">
+    
+    <!-- Profile Image -->
+    <div class="relative w-28 h-28 mx-auto mb-4">
+      <img class="w-full h-full rounded-full object-cover border-4 border-white shadow-md" 
+           src="https://img.freepik.com/free-vector/blue-circle-with-white-user_78370-4707.jpg?semt=ais_hybrid&w=740" 
+           alt="Profile Image">
+    </div>
+
+    <!-- User Info -->
+    <h2 class="text-2xl font-bold text-gray-800"><%= user.name %></h2>
+
+    <!-- Role Badge -->
+    <span class="inline-block mt-1 mb-3 px-3 py-1 text-sm font-medium text-blue-600 bg-blue-100 rounded-full">
+      🧑‍💻 <%= user.role %>
+    </span>
+
+    <p class="text-gray-600 mb-1">📧 <%= user.email %></p>
+    <p class="text-gray-500 text-sm">🕒 Last Updated: <span class="font-medium text-gray-700"><%= new Date(user.date).toLocaleDateString("en-GB", {
+                  day: "2-digit", month: "short", year: "numeric"
+                }) %></span></p>
+
+    <!-- Edit Button -->
+    <a href="/profile/edit" 
+       class="mt-6 inline-block bg-blue-600 text-white px-5 py-2 rounded-lg hover:bg-blue-700 transition-all duration-200">
+      ✏️ Edit Profile
+    </a>
+  </div>
+</div>

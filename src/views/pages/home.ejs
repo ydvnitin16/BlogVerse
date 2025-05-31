@@ -1,0 +1,73 @@
+<section class="min-h-screen bg-gradient-to-tr from-indigo-100 via-white to-pink-50 pt-10 pb-20">
+
+  <div class="max-w-4xl mx-auto px-4 text-center">
+    <h1 class="text-sm bg-indigo-100 text-indigo-600 inline-block px-3 py-1 rounded-full mb-4 font-medium">
+      ✨ BlogVerse: Turning ideas into articles instantly
+    </h1>
+    <h2 class="text-4xl sm:text-5xl font-bold text-gray-900 mb-2">
+      Our <span class="text-indigo-600">Latest</span> blogs.
+    </h2>
+    <p class="text-gray-600 max-w-xl mx-auto mb-8">
+      "From quick notes to deep thoughts — publish effortlessly with BlogVerse."
+    </p>
+
+    <!-- 🔍 Search Bar -->
+    <form action="/blogs/search" method="GET" class="w-full sm:w-100 md:w-100 lg:w-120 mx-auto mb-8">
+      <div class="relative">
+        <input type="text" name="search" placeholder="Search for blogs"
+          class="w-full pr-20 pl-4 py-3 sm:py-4 rounded-lg border border-gray-300 focus:outline-none focus:ring-2 focus:ring-indigo-400" />
+        <button type="submit"
+          class="absolute right-1 top-1/2 transform -translate-y-1/2 cursor-pointer bg-indigo-600 hover:bg-indigo-700 text-white rounded px-4 py-2 sm:py-3">
+          Search
+        </button>
+      </div>
+    </form>
+
+
+    <!-- 🧭 Categories -->
+    <div class="flex flex-wrap justify-center gap-3 mb-12">
+      <% const categories=["All", "Technology", "Self-Improvement" , "Startup" , "Health" , "Finance" ]; %>
+        <% categories.forEach(cat=> { 
+          const query = cat !== 'All'? `/blogs?category=${cat}` : '/' %>
+          <a href="<%= query %>"
+            class="px-4 py-1 text-sm rounded-full border border-indigo-200 text-indigo-600 bg-indigo-100 hover:bg-indigo-200 transform hover:scale-105 hover:-translate-y-1 transition duration-200 ease-in-out">
+            <%= cat %>
+          </a>
+          <% }) %>
+    </div>
+  </div>
+
+  <!-- 🧱 Blog Cards -->
+  <div
+    class="max-w-[95rem] mx-auto px-4 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-8 justify-items-center">
+    <% blogs.forEach(blog=> { %>
+      <a href="/blog/<%= blog._id %>" class="w-full max-w-sm group">
+        <div
+          class="bg-white border border-gray-200 rounded-2xl overflow-hidden shadow-md transform transition duration-300 group-hover:scale-105 group-hover:shadow-xl w-full h-full cursor-pointer">
+
+          <div class="aspect-[4/3] w-full overflow-hidden">
+            <img src="/<%= blog.imagePath %>" alt="<%= blog.title %>"
+              class="w-full h-full object-cover transition-transform duration-300 group-hover:scale-105" />
+          </div>
+
+          <div class="p-5">
+            <span class="inline-block mb-2 text-xs font-semibold px-3 py-1 bg-indigo-100 text-indigo-700 rounded-full">
+              <%= blog.category || "General" %>
+            </span>
+
+            <h3 class="text-lg font-bold text-gray-800 mb-2">
+              <%= blog.title %>
+            </h3>
+
+            <p class="text-sm text-gray-600 line-clamp-2">
+              <%= blog.content %>
+            </p>
+          </div>
+        </div>
+      </a>
+      <% }) %>
+  </div>
+
+
+
+</section>
