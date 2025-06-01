@@ -87,7 +87,7 @@ router.get("/profile", auth, async (req, res) => {
 
 router.get("/profile/edit", auth, async (req, res) => {
   const _id = req.user.userId;
-  const roles = ["visitor", "author"];
+  const roles = req.user.role === 'admin'? ["visitor", "author", "admin"] : ["visitor", "author"]
   const user = await User.findById(_id);
   res.render(
     "pages/editProfile",

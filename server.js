@@ -12,11 +12,12 @@ import { auth } from "./src/middlewares/auth.js";
 import multer from "multer";
 import { Blog } from "./src/models/blog.js";
 import renderRoutes from "./src/routes/renderRoutes.js";
-import adminRoutes from "./src/routes/adminRoutes.js"
-import searchRoutes from "./src/routes/searchRoutes.js"
+import adminRoutes from "./src/routes/adminRoutes.js";
+import searchRoutes from "./src/routes/searchRoutes.js";
 import session from "express-session";
 import jwt from "jsonwebtoken";
-
+import methodOverride from "method-override";
+import { error } from "console";
 
 const app = express();
 dotenv.config();
@@ -34,42 +35,42 @@ app.use("/public", express.static(path.join(__dirname, "src", "public")));
 // Public the assets folder
 app.use("/assets", express.static(path.join(__dirname, "src", "assets")));
 
-
-
 // Middlewares
 
+app.use(methodOverride("_method"));
 app.use(express.json());
 app.use(cookieParser());
 app.use(express.urlencoded({ extended: true }));
 app.use("/uploads", express.static(path.join(__dirname, "src", "uploads")));
-app.use(session({
-  secret: process.env.SESSION_SECRET_KEY,
-  resave: false,
-  saveUninitialized: false,
-  cookie: {
-    maxAge: 1000 * 60 * 60 * 24
-  }
-}));
+app.use(
+  session({
+    secret: process.env.SESSION_SECRET_KEY,
+    resave: false,
+    saveUninitialized: false,
+    cookie: {
+      maxAge: 1000 * 60 * 60 * 24,
+    },
+  })
+);
 
 app.use((req, res, next) => {
-  const token = req.cookies.authHeader?.split(' ')[1];
+  const token = req.cookies.authHeader?.split(" ")[1];
 
-  if(!token){
-     res.locals.role = 'unAuth-Visitor';
-     res.locals.user = null;
-  };
-
-  try{
-    const decoded = jwt.verify(token, process.env.SECRET_KEY);
-    res.locals.role = decoded.role || 'unAuth-Visitor';
-    res.locals.user = decoded;
-  }catch(err){
-    res.locals.role = 'unAuth-Visitor';
+  if (!token) {
+    res.locals.role = "unAuth-Visitor";
     res.locals.user = null;
   }
-  next()
-});
 
+  try {
+    const decoded = jwt.verify(token, process.env.SECRET_KEY);
+    res.locals.role = decoded.role || "unAuth-Visitor";
+    res.locals.user = decoded;
+  } catch (err) {
+    res.locals.role = "unAuth-Visitor";
+    res.locals.user = null;
+  }
+  next();
+});
 
 // Routes
 
@@ -77,17 +78,15 @@ app.use("/user", userRoutes);
 app.use("/blog", blogRoutes);
 app.use("/comment", commentRoutes);
 app.use("/", renderRoutes);
-app.use('/admin', adminRoutes);
-app.use("/blogs", searchRoutes)
-
-
-
-app.get("/test", (req, res) => {
-  res.send(`<link href="/css/output.css" rel="stylesheet">
-            <img src="/assets/blog-verse-logo.png" />
-            <p>Test page</p>`);
+app.use("/admin", adminRoutes);
+app.use("/blogs", searchRoutes);
+app.use("/*splat", (req, res) => {
+  throw new Error("This is invalid route!");
 });
 
+app.use((err, req, res, next) => {
+  res.json({ message: err });
+});
 
 const PORT = process.env.PORT || 3000;
 app.listen(PORT, () => {

@@ -3,15 +3,12 @@ function validateBlog(req, res, next) {
 
   if (
     [title, content, category].some(
-      (field) => field === null || field === undefined || field === ""
+      (field) => field === null || field === undefined || field.trim() === ""
     )
   ) {
     return res.status(400).json({ message: "Fields can't be empty" });
   }
-
-  if (!req.file) {
-    req.file = { filename: "default.png" };
-  }
+  
   next();
 }
 

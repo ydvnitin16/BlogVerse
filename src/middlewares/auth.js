@@ -49,7 +49,7 @@ const auth = async (req, res, next) => {
 const validateUpdation = async (req, res, next) => {
   const _id = req.user.userId;
   const user = await User.findById(_id);
-  const { name, role, password, confirmPwd } = req.body;
+  let { name, role, password, confirmPwd } = req.body;
 
     if (name === null || name === undefined || name === "") {
       return res.status(400).json({ message: "please enter correct fields." });

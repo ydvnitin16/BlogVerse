@@ -1,9 +1,9 @@
 import mongoose from "mongoose";
 
 const blogSchema = mongoose.Schema({
-  imagePath: {
-    type: String,
-    required: true,
+  image: {
+    url: String,
+    public_id: String,
   },
   title: {
     type: String,
