@@ -16,8 +16,10 @@ async function userRegister(req, res) {
       role,
     });
     await user.save();
+    req.session.modal = { type: "success", message:  'User registered'}
     res.redirect("/login");
   } catch (err) {
+    req.session.modal = { type: "error", message:  'Server Error'}
     res.status(500).send("Server error.");
   }
 }
@@ -47,8 +49,10 @@ async function userLogin(req, res) {
       httpOnly: true,
       secure: false,
     });
+    req.session.modal = { type: "success", message: "user Logged In" };
     res.redirect("/");
   } catch (err) {
+    req.session.modal = { type: "error", message: "Server Error" };
     res.status(500).json({ message: "Server error." });
   }
 }
@@ -88,7 +92,7 @@ async function editProfile(req, res) {
     httpOnly: true,
     secure: false,
   });
-
+  req.session.modal = { type: "success", message:  'Profile Updated'}
   res.redirect("/profile");
 }
 

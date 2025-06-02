@@ -21,6 +21,7 @@ router.post("/login", userLogin);
 // logout
 router.delete("/logout", auth, (req, res) => {
   res.clearCookie("authHeader");
+  req.session.modal = { type: "success", message:  'User Logged Out'}
   res.redirect("/");
 });
 

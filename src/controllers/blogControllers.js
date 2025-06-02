@@ -30,9 +30,11 @@ async function createBlog(req, res) {
       author,
     });
     await blog.save();
+    req.session.modal = { type: "success", message:  'Blog Created'}
     res.redirect("/");
     // return res.status(200).json({ message: "Blog posted", data: blog });
   } catch (err) {
+    req.session.modal = { type: "error", message:  'Server Error'}
     res.status(500).json({ message: "Server error" });
   }
 }
@@ -85,8 +87,10 @@ async function deleteBlog(req, res) {
     }
 
     await blog.deleteOne();
+    req.session.modal = { type: "success", message:  'Blog Deleted'}
     res.redirect("/");
   } catch (err) {
+    req.session.modal = { type: "error", message:  'Server Error'}
     res.status(500).json({ message: "Server error" });
   }
 }
@@ -127,9 +131,10 @@ async function editBlog(req, res) {
     existingBlog.content = content;
     existingBlog.category = category;
     await existingBlog.save();
+    req.session.modal = { type: "success", message:  'Edit Successfull'}
     res.redirect(`/blog/${req.params.id}`);
   } catch (err) {
-    console.log(err.message);
+    req.session.modal = { type: "error", message:  'Server Error'}
     res.json({ message: "Server Error." });
   }
 }

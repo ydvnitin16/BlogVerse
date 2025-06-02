@@ -26,9 +26,10 @@ router.post("/:id", auth, checkRole('visitor', 'author', 'admin'), async (req, r
       commentContent,
     });
     await comment.save();
+    req.session.modal = { type: "success", message:  'Comment Posted'}
     res.redirect(`/blog/${req.params.id}`)
   } catch (err) {
-    console.log(`ERROR: ${err}`);
+    req.session.modal = { type: "error", message: 'Server Error'}
     res.status(500).json({ message: "Server error" });
   }
 });

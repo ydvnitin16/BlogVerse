@@ -23,6 +23,7 @@ async function changeRole(req, res) {
   const { role } = req.body;
 
   await User.findByIdAndUpdate(id, { role: role });
+  req.session.modal = { type: "success", message:  'Role Updated'}
   res.redirect("/admin/all-users");
 }
 
@@ -50,12 +51,14 @@ async function deleteUser(req, res) {
       await Comment.deleteMany({ userId: id });
 
       await Comment.deleteMany({ blogId: { $in: blogIds } });
+      
     } catch (err) {
       console.error(err);
     }
-
+    req.session.modal = { type: "success", message:  'User Deleted'}
     res.redirect("/admin/all-users");
   } catch (err) {
+    req.session.modal = { type: "error", message:  'Server Error'}
     res.json({ message: "Server Error." });
   }
 }

@@ -13,57 +13,79 @@
 </head>
 
 <body class="flex m-0 p-0 flex-col">
-    <%- include("./partials/navbar") %>
+    <% if(currentPage !=='Invalid' ) { %>
+        <%- include("./partials/navbar") %>
+            <% } %>
+
+                <%- include("./partials/message") %>
+
+                    <%- body %>
 
 
-        <%- body %>
+                        <% if(currentPage !=='Invalid' ) { %>
+                            <%- include("./partials/footer") %>
+                                <% } %>
 
+                                    <!-- Modal Background -->
+                                    <div id="logoutModal"
+                                        class="fixed inset-0 bg-gray-200 bg-opacity-12 flex items-center justify-center z-50 hidden">
+                                        <!-- Modal Box -->
+                                        <div class="bg-white rounded-2xl shadow-lg max-w-sm w-full p-6 mx-4">
+                                            <h3 class="text-xl font-semibold text-gray-900 mb-4">Confirm Logout
+                                            </h3>
+                                            <p class="text-gray-600 mb-6">Are you sure you want to log out?</p>
+                                            <div class="flex justify-end space-x-4">
+                                                <button id="cancelLogoutBtn"
+                                                    class="px-4 py-2 rounded-full border border-gray-300 text-gray-700 hover:bg-gray-100 transition cursor-pointer">
+                                                    Cancel
+                                                </button>
+                                                <form action="/user/logout?_method=DELETE" method="POST">
+                                                    <button type="submit"
+                                                        class="px-4 py-2 rounded-full bg-red-600 text-white hover:bg-red-700 transition cursor-pointer">
+                                                        Logout
+                                                    </button>
+                                                </form>
+                                            </div>
+                                        </div>
+                                    </div>
 
-            <%- include("./partials/footer") %>
+                                    <% if (modal) { %>
+                                        <script>
+                                            let modalTimeout
+                                            function showModal({ type = "success", message = "Action complete!" }) {
+                                                const modal = document.getElementById("message-modal");
+                                                const icon = document.getElementById("modal-icon");
+                                                const msg = document.getElementById("modal-message");
 
-                <!-- Modal Background -->
-                <div id="logoutModal"
-                    class="fixed inset-0 bg-gray-200 bg-opacity-12 flex items-center justify-center z-50 hidden">
-                    <!-- Modal Box -->
-                    <div class="bg-white rounded-2xl shadow-lg max-w-sm w-full p-6 mx-4">
-                        <h3 class="text-xl font-semibold text-gray-900 mb-4">Confirm Logout</h3>
-                        <p class="text-gray-600 mb-6">Are you sure you want to log out?</p>
-                        <div class="flex justify-end space-x-4">
-                            <button id="cancelLogoutBtn"
-                                class="px-4 py-2 rounded-full border border-gray-300 text-gray-700 hover:bg-gray-100 transition cursor-pointer">
-                                Cancel
-                            </button>
-                            <form action="/user/logout?_method=DELETE" method="POST">
-                                <button type="submit"
-                                    class="px-4 py-2 rounded-full bg-red-600 text-white hover:bg-red-700 transition cursor-pointer">
-                                    Logout
-                                </button>
-                            </form>
-                        </div>
-                    </div>
-                </div>
+                                                const icons = {
+                                                    success: "✅",
+                                                    error: "❌",
+                                                    info: "ℹ️",
+                                                    warning: "⚠️",
+                                                };
 
+                                                icon.textContent = icons[type] || "✅";
+                                                msg.textContent = message;
 
-                <script>
-                    function toggleNavbar() {
-                        const navbar = document.getElementById('navbar-default');
-                        navbar.classList.toggle('hidden');
-                        console.log(`hit`)
-                    }
-                    const logoutModal = document.getElementById('logoutModal');
-                    const cancelBtn = document.getElementById('cancelLogoutBtn');
+                                                modal.classList.remove("hidden");
 
-                    // Function to show the modal
-                    function showLogoutModal() {
-                        logoutModal.classList.remove('hidden');
-                    }
+                                                clearTimeout(modalTimeout);
+                                                modalTimeout = setTimeout(hideModal, 5000);
+                                            }
 
-                    // Cancel button hides the modal
-                    cancelBtn.addEventListener('click', () => {
-                        logoutModal.classList.add('hidden');
-                    });
-  
-                </script>
+                                            function hideModal() {
+                                                const modal = document.getElementById("message-modal");
+                                                modal.classList.add("hidden");
+                                            }
+
+                                            showModal({
+                                                type: "<%= modal.type %>",
+                                                message: "<%= modal.message %>",
+                                            });
+                                        </script>
+                                        <% } %>
+
+                                            <script src="/public/frontend.js"></script>
 </body>
 
 </html>

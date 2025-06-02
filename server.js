@@ -30,7 +30,7 @@ const __dirname = path.dirname(__filename);
 app.set("view engine", "ejs");
 app.set("views", path.join(__dirname, "src", "views"));
 
-// Public the css file
+// Public the Public folder
 app.use("/public", express.static(path.join(__dirname, "src", "public")));
 // Public the assets folder
 app.use("/assets", express.static(path.join(__dirname, "src", "assets")));
@@ -72,6 +72,12 @@ app.use((req, res, next) => {
   next();
 });
 
+app.use((req, res, next) => {
+  res.locals.modal = req.session.modal;
+  delete req.session.modal;
+  next();
+});
+
 // Routes
 
 app.use("/user", userRoutes);
@@ -85,7 +91,9 @@ app.use("/*splat", (req, res) => {
 });
 
 app.use((err, req, res, next) => {
-  res.json({ message: err });
+  res.render("pages/invalid", { title: 404 }, (err, html) => {
+    res.render("layout", { body: html, title: 404, currentPage: "Invalid" });
+  });
 });
 
 const PORT = process.env.PORT || 3000;
