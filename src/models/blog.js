@@ -24,6 +24,7 @@ const blogSchema = mongoose.Schema({
       "Technology",
       "Startup",
       "Self-Improvement",
+      "Career",
       "Education",
       "Finance",
       "Gaming",
