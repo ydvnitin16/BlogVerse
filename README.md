@@ -35,3 +35,7 @@ A full-stack blog application built with Node.js, Express.js, EJS, MongoDB, and 
 1. Clone the repo:
    ```bash
    git clone https://github.com/ydvnitin16/BlogVerse.git
+
+###Deployed On Render
+```bash
+https://blogverse-72b7.onrender.com
